@@ -1,0 +1,27 @@
+---
+# tasks file for roles/tools
+
+- name: Execute install_ElasticStack.yml
+  ansible.builtin.include_tasks:
+    file: install_ElasticStack.yml
+
+- name: Execute install_Nagios.yml
+  ansible.builtin.include_tasks:
+    file: install_Nagios.yml
+  when: ansible_distribution == "Ubuntu"
+
+- name: Execute install_Grafana.yml
+  ansible.builtin.include_tasks:
+    file: install_Grafana.yml
+
+- name: Execute install_Prometheus.yml
+  ansible.builtin.include_tasks:
+    file: install_Prometheus.yml
+
+- name: Execute install_InfluxDB.yml
+  ansible.builtin.include_tasks:
+    file: install_InfluxDB.yml
+
+- name: Execute install_LampStack.yml
+  ansible.builtin.include_tasks:
+    file: install_LampStack.yml

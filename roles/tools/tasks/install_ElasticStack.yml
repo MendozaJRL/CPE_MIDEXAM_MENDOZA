@@ -1,0 +1,84 @@
+
+- name: Install Packages needed for Elastic Stack
+  apt:
+#    name:
+#      - default-jre
+#      - apt-transport-https
+#      - curl
+#      - software-properties-common
+#    state: present
+#  become: yes
+  when: ansible_distribution == "Ubuntu"
+
+- name: Import Repository Key
+  apt:
+#  apt_key:
+#    url: https://artifacts.elastic.co/GPG-KEY-elasticsearch
+#  become: yes
+  when: ansible_distribution == "Ubuntu"
+
+- name: Import Elastic Stack Installation Repository
+  apt:
+#  apt_repository:
+#    repo: "deb https://artifacts.elastic.co/packages/7.x/apt stable main"
+#    state: present
+#  become: yes
+  when: ansible_distribution == "Ubuntu"
+
+- name: Install Elastic Stack
+  apt:
+#    name: elasticsearch
+#    state: present
+#  become: yes
+  when: ansible_distribution == "Ubuntu"
+
+- name: Enable Elastic Stack Log Monitoring Tool
+  apt: 
+# systemd:
+ #   name: elasticsearch
+ #   enabled: yes
+ #   state: started
+ # become: yes
+  when: ansible_distribution == "Ubuntu"
+
+- name: Install Kibana
+  apt:
+ #   name: kibana
+ #   state: present
+ # become: yes
+  when: ansible_distribution == "Ubuntu"
+
+- name: Enable Kibana Service
+  apt: 
+# systemd:
+ #   name: kibana
+ #   enabled: yes
+ #   state: started
+ # become: yes
+  when: ansible_distribution == "Ubuntu"
+
+- name: Install Logstash
+  apt:
+  #  name: logstash
+  #  state: present
+  #become: yes
+  when: ansible_distribution == "Ubuntu"
+
+- name: Enable Logstash Service
+  apt:
+#  systemd:
+#    name: logstash
+#    enabled: yes
+#    state: started
+#  become: yes
+  when: ansible_distribution == "Ubuntu"
+
+- name: Restart Elasticsearch and Kibana
+  apt:
+#  systemd:
+#    name: "{{ item }}"
+#    state: restarted
+#  loop:
+#    - elasticsearch
+#    - kibana
+  when: ansible_distribution == "Ubuntu"

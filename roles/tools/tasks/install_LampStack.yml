@@ -1,0 +1,57 @@
+
+- name: Install LampStack Pre-requisite Packages for Ubuntu
+  apt:
+#    name:
+#      - apache2
+#      - php
+#      - libapache2-mod-php
+#      - mysql-server
+#      - php-mysql
+#    state: latest
+  when: ansible_distribution == "Ubuntu"
+
+- name: Enable Apache for Ubuntu
+  apt:
+
+#  service:
+#    name: apache2
+#    state: started
+#    enabled: true
+  when: ansible_distribution == "Ubuntu"
+
+- name: Install LampStack Pre-requisite Packages for CentOS
+  yum:
+#    name:
+#      - httpd
+#      - mariadb
+#      - mariadb-server
+#      - php
+#      - php-mysql
+#    state: latest
+  when: ansible_distribution == "CentOS"
+
+- name: Configuring Firewall / Port Settings to access Packages
+  yum:
+#  shell: |
+ #   sudo firewall-cmd --permanent --zone=public --add-service=http
+ #   sudo firewall-cmd --permanent --zone=public --add-service=https
+  #  sudo firewall-cmd --reload
+  when: ansible_distribution == "CentOS"
+
+- name: Enable Apache for CentOS
+
+  yum:
+#  service:
+#    name: httpd
+#    state: started
+ #   enabled: true
+  when: ansible_distribution == "CentOS"
+
+- name: Enable Maria Database for CentOS
+ 
+  yum:
+# service:
+#    name: mariadb
+#    state: started
+#    enabled: true
+  when: ansible_distribution == "CentOS"

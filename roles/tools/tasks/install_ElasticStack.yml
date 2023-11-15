@@ -76,3 +76,88 @@
     - elasticsearch
     - kibana
   when: ansible_distribution == "Ubuntu"
+
+
+- name: Install Packages needed for Elastic Stack
+  yum:
+    name:
+      - java-1.8.0-openjdk
+      - epel-release
+      - wget
+      - which
+    state: present
+  become: yes
+  when: ansible_distribution == "CentOS"
+
+- name: Import Elastic Stack Repository Key
+  shell: rpm --import https://artifacts.elastic.co/GPG-KEY-elasticsearch
+  when: ansible_distribution == "CentOS"
+
+- name: Import Elastic Stack Installation Repository
+  copy:
+    content: |
+      [elasticsearch-7.x]
+      name=Elasticsearch repository for 7.x packages
+      baseurl=https://artifacts.elastic.co/packages/7.x/yum
+      gpgcheck=1
+      gpgkey=https://artifacts.elastic.co/GPG-KEY-elasticsearch
+      enabled=1
+      autorefresh=1
+      type=rpm-md
+    dest: /etc/yum.repos.d/elasticsearch.repo
+  become: yes
+  when: ansible_distribution == "CentOS"
+
+- name: Installing Elastic Stack
+  yum:
+     name: elasticsearch
+     state: present
+  become: yes
+  when: ansible_distribution == "CentOS"
+
+- name: Enabling Elastic Stack Log Monitoring Tool
+  systemd:
+     name: elasticsearch
+     enabled: yes
+     state: started
+  become: yes
+  when: ansible_distribution == "CentOS"
+
+- name: Installing Kibana
+  yum:
+    name: kibana
+    state: present
+  become: yes
+  when: ansible_distribution == "CentOS"
+
+- name: Enabling Kibana Service
+  systemd:
+    name: kibana
+    enabled: yes
+    state: started
+  become: yes
+  when: ansible_distribution == "CentOS"
+
+- name: Installing Logstash Service
+  yum:
+    name: logstash
+    state: present
+  become: yes
+  when: ansible_distribution == "CentOS"
+
+- name: Enabling Logstash Service
+  systemd:
+    name: logstash
+    enabled: yes
+    state: started
+  become: yes
+  when: ansible_distribution == "CentOS"
+
+- name: Restart Elastic Stack and Kibana
+  systemd:
+    name: "{{ item }}"
+    state: restarted
+  loop:
+    - elasticsearch
+    - kibana
+  when: ansible_distribution == "CentOS"

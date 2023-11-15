@@ -8,27 +8,25 @@
   when: ansible_distribution == "Ubuntu"
 
 - name: Copying InfluxDB Compressed File on Local Repository
-  yum:
-#  unarchive:
-#    src: https://dl.influxdata.com/influxdb/releases/influxdb2-2.4.0-linux-amd64.tar.gz
-#    dest: /tmp/
-#    remote_src: yes
-#    mode: 0777
-#    owner: root
-#    group: root
+  unarchive:
+    src: https://dl.influxdata.com/influxdb/releases/influxdb2-2.4.0-linux-amd64.tar.gz
+    dest: /tmp/
+    remote_src: yes
+    mode: 0777
+    owner: root
+    group: root
   when: ansible_distribution == "CentOS"
 
 - name: Configuring the needed Packages
-  yum:
-#  shell: 
-#    cd /tmp/influxdb2*
-#    sudo cp influxdb2-2.4.0-linux-amd64/influxd /usr/local/bin/
+  shell:
+    cd /tmp/influxdb2*
+    sudo cp influxdb2-2.4.0-linux-amd64/influxd /usr/local/bin/
   when: ansible_distribution == "CentOS"
 
 - name: Install InfluxDB for CentOS
   yum:
-#    name: influxdb
-#    state: present
-#    use_backend: dnf4
+    name: influxdb
+    state: present
+    use_backend: dnf4
   when: ansible_distribution == "CentOS"
 

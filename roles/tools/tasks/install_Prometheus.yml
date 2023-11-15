@@ -35,45 +35,40 @@
   when: ansible_distribution == "CentOS"
 
 - name: Install Prometheus (CentOS)
-  yum:
-#  unarchive:
-#    src: https://github.com/prometheus/prometheus/releases/download/v2.8.1/prometheus-2.8.1.linux-amd64.tar.gz
-#    dest: ~/prometheus
-#    remote_src: yes
-#    mode: 0777
-#    owner: root
-#    group: root
+  unarchive:
+    src: https://github.com/prometheus/prometheus/releases/download/v2.8.1/prometheus-2.8.1.linux-amd64.tar.gz
+    dest: ~/prometheus
+    remote_src: yes
+    mode: 0777
+    owner: root
+    group: root
   when: ansible_distribution == "CentOS"
 
 - name: Copy the Installed Prometheus Package to the Initialized Directory
-  yum:
-#  shell: |
-#    cd ~/prometheus/prometheus*
-#    cp -r . /usr/local/bin/prometheus
+  shell: |
+    cd ~/prometheus/prometheus*
+    cp -r . /usr/local/bin/prometheus
   when: ansible_distribution == "CentOS"
 
 - name: Initializing Prometheus to be used on the CentOs
-  yum:
-#  copy:
-#    src: roles/prometheus/files/install_Prometheus.service
-#    dest: /etc/systemd/system
-#    mode: 7777
-#    owner: root
-#    group: root
+  copy:
+    src: roles/prometheus/files/install_Prometheus.service
+    dest: /etc/systemd/system
+    mode: 7777
+    owner: root
+    group: root
   when: ansible_distribution == "CentOS"
 
 - name: Enabling Prometheus Performance Tool
-  yum:
-#  service:
-#    name: install_Prometheus.service
-#    state: restarted
-#    enabled: true
+  service:
+    name: install_Prometheus.service
+    state: restarted
+    enabled: true
   when: ansible_distribution == "CentOS"
 
 - name: Restaring HTTPD Service on CentOS
-  yum:
-#  service:
-#    name: httpd
-#    state: restarted
-#    enabled: true
+  service:
+    name: httpd
+    state: restarted
+    enabled: true
   when: ansible_distribution == "CentOS"
